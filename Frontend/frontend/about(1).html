@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Seraphis | Your AI Therapist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fbff;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: linear-gradient(90deg, #3a58f5, #8237ee);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .about-content {
+      flex: 1 1 500px;
+    }
+
+    .about-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: #4a4a4a;
+    }
+
+    .about-image {
+      flex: 1 1 400px;
+      text-align: center;
+    }
+
+    .about-image img {
+      max-width: 100%;
+      border-radius: 1.5rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .cta {
+      margin-top: 2rem;
+    }
+
+    .cta a {
+      background-color: #3a58f5;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .cta a:hover {
+      background-color: #2e46d2;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .about-content h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Seraphis</h1>
+  </header>
+
+  <section class="container">
+    <div class="about-content">
+      <h2>About Seraphis</h2>
+      <p>
+        Seraphis is your personal AI therapist available 24/7 to help you manage stress, anxiety, and emotional challenges.
+        Built with powerful AI models and empathy-driven design, Seraphis listens, understands, and responds like a real human therapist.
+      </p>
+      <p>
+        Whether you're dealing with a tough day or long-term mental health concerns, Seraphis offers a safe, confidential, and non-judgmental space to talk.
+        With real-time responses, calming UI, and voice support, therapy is now more accessible than ever.
+      </p>
+      <div class="cta">
+        <a href="chatbot.html">Start Your Therapy</a>
+      </div>
+    </div>
+
+    <div class="about-image">
+      <img src="https://mantracare.org/wp-content/uploads/2021/12/therapist-courses-1536x1024.png" alt="Seraphis Chat Interface Demo" />
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Open Sans', Arial, sans-serif;
+        }
+        .admin-container {
+            background: #fff;
+            padding: 32px 28px 24px 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(60, 60, 120, 0.15);
+            width: 100%;
+            max-width: 600px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            font-weight: 700;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            font-size: 15px;
+        }
+        th {
+            background: #f3f4f6;
+            color: #2563eb;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            background: #ef4444;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button.promote {
+            background: #22c55e;
+            margin-left: 8px;
+        }
+        button:hover {
+            opacity: 0.85;
+        }
+        #logoutBtn {
+            background: #2563eb;
+            margin-bottom: 18px;
+            float: right;
+        }
+        #adminMsg {
+            text-align: center;
+            color: #dc2626;
+            min-height: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <button id="logoutBtn">Logout</button>
+        <h2>Admin Portal</h2>
+        <div id="adminMsg"></div>
+        <table id="usersTable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Admin</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Users will be loaded here -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Redirect to login if not authenticated
+        if (!localStorage.getItem('token')) {
+            window.location.href = "login.html";
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').onclick = function() {
+            localStorage.removeItem('token');
+            window.location.href = "login.html";
+        };
+
+        // Fetch and display users
+        async function loadUsers() {
+            const msg = document.getElementById('adminMsg');
+            msg.textContent = '';
+            msg.style.color = "#dc2626";
+            try {
+                const res = await fetch('http://localhost:5000/api/admin/users', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+                const users = await res.json();
+                if (!res.ok) {
+                    msg.textContent = users.message || "Failed to load users.";
+                    return;
+                }
+                const tbody = document.querySelector('#usersTable tbody');
+                tbody.innerHTML = '';
+                users.forEach(user => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.isAdmin ? 'Yes' : 'No'}</td>
+                        <td>
+                            <button onclick="deleteUser('${user._id}')">Delete</button>
+                            ${!user.isAdmin ? `<button class="promote" onclick="promoteUser('${user._id}')">Promote</button>` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                msg.textContent = "Server error. Please try again.";
+            }
+        }
+
+        // Delete user
+        async function deleteUser(id) {
+            if (!confirm("Are you sure you want to delete this user?")) return;
+            const msg = document.getElementById('adminMsg');
+            msg.textContent = '';
+            msg.style.color = "#dc2626";
+            try {
+                const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    msg.style.color = "#16a34a";
+                    msg.textContent = data.message;
+                    loadUsers();
+                } else {
+                    msg.style.color = "#dc2626";
+                    msg.textContent = data.message || "Delete failed.";
+                }
+            } catch (err) {
+                msg.style.color = "#dc2626";
+                msg.textContent = "Server error. Please try again.";
+            }
+        }
+
+        // Promote user to admin
+        async function promoteUser(id) {
+            const msg = document.getElementById('adminMsg');
+            msg.textContent = '';
+            msg.style.color = "#dc2626";
+            try {
+                const res = await fetch(`http://localhost:5000/api/admin/users/${id}/promote`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    msg.style.color = "#16a34a";
+                    msg.textContent = data.message;
+                    loadUsers();
+                } else {
+                    msg.style.color = "#dc2626";
+                    msg.textContent = data.message || "Promote failed.";
+                }
+            } catch (err) {
+                msg.style.color = "#dc2626";
+                msg.textContent = "Server error. Please try again.";
+            }
+        }
+
+        // Make functions global for inline onclick
+        window.deleteUser = deleteUser;
+        window.promoteUser = promoteUser;
+
+        // Initial load
+        loadUsers();
+    </script>
+</body>
+</html>

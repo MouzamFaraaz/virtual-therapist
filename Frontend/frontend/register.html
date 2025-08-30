@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Open Sans', Arial, sans-serif;
+        }
+        .container {
+            background: #fff;
+            padding: 32px 28px 24px 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(60, 60, 120, 0.15);
+            width: 100%;
+            max-width: 350px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            font-weight: 700;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 15px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #f9fafb;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #2563eb;
+            outline: none;
+            background: #fff;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px 0;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: #1e40af;
+        }
+        p {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create an Account</h2>
+        <form id="registrationForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Register</button>
+        </form>
+        <p id="registerMsg" style="text-align:center;color:#dc2626;"></p>
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email    = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const msg      = document.getElementById('registerMsg');
+            msg.textContent = '';
+            try {
+                const res = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    msg.style.color = "#16a34a";
+                    msg.textContent = "Registration successful! You can now login.";
+                    setTimeout(() => window.location.href = "login.html", 1500);
+                } else {
+                    msg.style.color = "#dc2626";
+                    msg.textContent = data.message || "Registration failed.";
+                }
+            } catch (err) {
+                msg.style.color = "#dc2626";
+                msg.textContent = "Server error. Please try again.";
+            }
+        });
+    </script>
+</body>
+</html>

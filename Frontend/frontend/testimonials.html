@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Testimonials | Seraphis AI Therapist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fbff;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: linear-gradient(90deg, #3a58f5, #8237ee);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 4rem 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background-color: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .quote-mark {
+      font-size: 2.5rem;
+      color: #8237ee;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 1rem;
+      color: #444;
+    }
+
+    .testimonial-author {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .testimonial-role {
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Seraphis</h1>
+  </header>
+
+  <div class="container">
+    <h2>What Our Users Say</h2>
+    <div class="testimonials">
+
+      <div class="testimonial-card">
+        <div class="quote-mark">“</div>
+        <p class="testimonial-text">Seraphis helped me talk about things I never could before. It's like a therapist in my pocket, always there when I need to vent or just feel heard.</p>
+        <p class="testimonial-author">Aanya Patel</p>
+        <p class="testimonial-role">Student, Bangalore</p>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-mark">“</div>
+        <p class="testimonial-text">I was skeptical at first, but the way Seraphis responds feels genuinely comforting. It’s made a real difference in my nightly anxiety routine.</p>
+        <p class="testimonial-author">Rohan Mehta</p>
+        <p class="testimonial-role">Freelancer, Pune</p>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-mark">“</div>
+        <p class="testimonial-text">I love how intuitive Seraphis is — it remembers my moods and helps me process thoughts. A safe space I can return to, any time of day.</p>
+        <p class="testimonial-author">Neha Sharma</p>
+        <p class="testimonial-role">Product Designer, Hyderabad</p>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
